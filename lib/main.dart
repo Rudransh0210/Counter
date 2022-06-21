@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'presentation/UI/custom_theme.dart';
-import 'presentation/screens/home_screen.dart';
-
-import 'core/locator.dart';
-import 'services/local_storage_service.dart';
+import './core/locator.dart';
+import './services/local_storage_service.dart';
+import './presentation/counter.dart';
 
 LocalStorageService localStorageService = locator<LocalStorageService>();
 Future<void> main() async {
@@ -17,21 +14,19 @@ Future<void> main() async {
 
 int counter = 0;
 
+// ignore: use_key_in_widget_constructors
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-        designSize: const Size(360, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return MaterialApp(
-            title: 'Counter App',
-            theme: customTheme(context),
-            home: const MyHomePage(title: 'Counter App'),
-          );
-        });
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Counter App'),
+        ),
+        body: CounterPage(
+          localStorageService: localStorageService,
+        ),
+      ),
+    );
   }
 }
